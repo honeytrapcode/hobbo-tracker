@@ -43,20 +43,6 @@
                 <!-- Grid layout for form fields -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-6">
                     
-                    <!-- Day Dropdown -->
-                    <div>
-                        <label for="Day" class="form-label">Day</label>
-                        <select id="Day" name="Day" class="form-input">
-                            <option>Monday</option>
-                            <option>Tuesday</option>
-                            <option>Wednesday</option>
-                            <option>Thursday</option>
-                            <option>Friday</option>
-                            <option>Saturday</option>
-                            <option>Sunday</option>
-                        </select>
-                    </div>
-
                     <!-- Date Picker -->
                     <div>
                         <label for="Date" class="form-label">Date</label>
@@ -171,33 +157,17 @@
         const moodSlider = document.getElementById('Mood Score');
         const moodValue = document.getElementById('mood-value');
         const dateField = document.getElementById('Date');
-        const dayField = document.getElementById('Day');
         const dateEnteredField = document.getElementById('Date Entered');
-
-        // Function to set the day of the week based on the selected date
-        const setDayOfWeek = () => {
-            const date = new Date(dateField.value);
-            // Adding a day to correct for timezone issues where it might be a day behind
-            date.setDate(date.getDate() + 1);
-            const dayIndex = date.getDay();
-            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            // Handles Sunday being index 0
-            dayField.value = days[dayIndex === 0 ? 6 : dayIndex -1];
-        };
 
         // --- INITIAL SETUP ---
         // Set today's date automatically when the page loads
         dateField.valueAsDate = new Date();
-        setDayOfWeek(); // Set the day for today
 
         // --- EVENT LISTENERS ---
         // Update mood score display when slider changes
         moodSlider.addEventListener('input', (e) => {
             moodValue.textContent = e.target.value;
         });
-        
-        // Update the 'Day' dropdown when the date is changed by the user
-        dateField.addEventListener('change', setDayOfWeek);
 
         // Handle the form submission
         form.addEventListener('submit', e => {
@@ -223,7 +193,6 @@
                     
                     // Restore default values after reset
                     dateField.valueAsDate = new Date();
-                    setDayOfWeek();
                     moodValue.textContent = '5'; 
                     
                     // Clear the success message after 5 seconds
